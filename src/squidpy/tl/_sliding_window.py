@@ -140,31 +140,31 @@ def sliding_window(
             )
             obs_indices = lib_coords.index[mask]
 
-            if overlap == 0:
-                mask = (
-                    (lib_coords[x_col] >= x_start)
-                    & (lib_coords[x_col] <= x_end)
-                    & (lib_coords[y_col] >= y_start)
-                    & (lib_coords[y_col] <= y_end)
-                )
-                obs_indices = lib_coords.index[mask]
-                sliding_window_df.loc[obs_indices, sliding_window_key] = f"{lib_key}window_{idx}"
+            #if overlap == 0:
+            ##    mask = (
+            #        (lib_coords[x_col] >= x_start)
+            #        & (lib_coords[x_col] <= x_end)
+            #        & (lib_coords[y_col] >= y_start)
+            #        & (lib_coords[y_col] <= y_end)
+            #    )
+            #    obs_indices = lib_coords.index[mask]
+            #    sliding_window_df.loc[obs_indices, sliding_window_key] = f"{lib_key}window_{idx}"
 
-            else:
-                col_name = f"{sliding_window_key}_{lib_key}window_{idx}"
-                sliding_window_df.loc[obs_indices, col_name] = True
-                sliding_window_df.loc[:, col_name].fillna(False, inplace=True)
+            #else:
+            col_name = f"{sliding_window_key}_{lib_key}window_{idx}"
+            sliding_window_df.loc[obs_indices, col_name] = True
+            sliding_window_df.loc[:, col_name].fillna(False, inplace=True)
 
-    if overlap == 0:
-        # create categorical variable for ordered windows
-        sliding_window_df[sliding_window_key] = pd.Categorical(
-            sliding_window_df[sliding_window_key],
-            ordered=True,
-            categories=sorted(
-                sliding_window_df[sliding_window_key].unique(),
-                key=lambda x: int(x.split("_")[-1]),
-            ),
-        )
+    #if overlap == 0:
+    #    # create categorical variable for ordered windows
+    #    sliding_window_df[sliding_window_key] = pd.Categorical(
+    #        sliding_window_df[sliding_window_key],
+    #        ordered=True,
+    #        categories=sorted(
+    #            sliding_window_df[sliding_window_key].unique(),
+    #            key=lambda x: int(x.split("_")[-1]),
+    #        ),
+    #    )
 
     sliding_window_df[x_col] = coords[x_col]
     sliding_window_df[y_col] = coords[y_col]
